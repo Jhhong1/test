@@ -10,7 +10,7 @@ pipeline {
                 timeout(time: 3, unit: 'SECONDS') {
                     sh '''
                         echo "sleep"
-                        sleep 4
+                        sleep 3
                     '''
                     
                 }
