@@ -1,27 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
-            steps {
-                sh 'echo "start build"'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'echo "start test"'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'echo "start deploy"'
-            }
-        }
-    }
+        /* "Build" and "Test" stages omitted */
 
-    post {
-        always {
-            archiveArtifacts artifacts: '*.xml', fingerprint: true
-            junit '*.xml'
+        stage('Deploy - Staging') {
+            steps {
+                sh 'echo "deploy staging"'
+            }
+        }
+
+        stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
+        }
+
+        stage('Deploy - Production') {
+            steps {
+                sh 'echo "deploy production"'
+            }
         }
     }
 }
