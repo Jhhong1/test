@@ -38,7 +38,7 @@ pipeline {
                             env: 'staging',
                             caseType: params.COMPONENT,
                             branch: ${BRANCH},
-                            pipeline: "hhjinc",
+                            pipeline: "hhjin",
                         ]).addPostAction({ succeeded ->
                             if (!succeeded) {
                                 echo "API Testing Failed, will rollback environment..."
