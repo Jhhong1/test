@@ -7,9 +7,11 @@ pipeline {
     }
     stages {
         stage('Clone') {
-            APP = checkout scm
-            BRANCH = ${APP.GIT_BRANCH}
-            echo "current branch: ${BRANCH}"
+            steps {
+                APP = checkout scm
+                BRANCH = ${APP.GIT_BRANCH}
+                echo "current branch: ${BRANCH}"
+            }
         }
         stage('Deploy') {
             steps {
