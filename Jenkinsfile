@@ -37,7 +37,7 @@ pipeline {
                         deploy.triggerAuto([
                             env: 'staging',
                             caseType: params.COMPONENT,
-                            branch: ${BRANCH},
+                            branch: BRANCH,
                             pipeline: "hhjin",
                         ]).addPostAction({ succeeded ->
                             if (!succeeded) {
