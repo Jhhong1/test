@@ -12,12 +12,12 @@ pipeline {
                 script {
                     container('tools') {
                         APP = checkout scm
-                        BRANCH = ${APP.GIT_BRANCH}
-                        echo "current branch: ${BRANCH}"
+                        echo "current branch: ${APP.GIT_BRANCH}"
                         release = deploy.chartsRelease(
 							params.COMPONENT,
 							params.BRANCH
 							)
+                       release.setScm(scmVars)
                     }
                 }
             }
