@@ -4,14 +4,21 @@ pipeline {
     agent any
     parameters {
         string(name: 'COMPONENT', defaultValue: '', description: 'The component of the chart worked on. Will be used to update the values.yaml file.')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to be used by the chart.')
     }
     stages {
         stage('Clone') {
             steps {
                 script {
-                    APP = checkout scm
-                    BRANCH = ${APP.GIT_BRANCH}
-                    echo "current branch: ${BRANCH}"
+                    container('tools') {
+                        APP = checkout scm
+                        BRANCH = ${APP.GIT_BRANCH}
+                        echo "current branch: ${BRANCH}"
+                        release = deploy.chartsRelease(
+							params.COMPONENT,
+							params.BRANCH
+							)
+                    }
                 }
             }
         }
@@ -36,8 +43,8 @@ pipeline {
                     container('tools') {
                         deploy.triggerAuto([
                             env: 'staging',
-                            caseType: params.COMPONENT,
-                            branch: BRANCH,
+                            caseType: release.component,
+                            branch: branch,
                             pipeline: "hhjin",
                         ]).addPostAction({ succeeded ->
                             if (!succeeded) {
