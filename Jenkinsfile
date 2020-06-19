@@ -17,7 +17,7 @@ pipeline {
 							params.COMPONENT,
 							params.BRANCH
 							)
-                       release.setScm(scmVars)
+                       release.setScm(APP)
                     }
                 }
             }
